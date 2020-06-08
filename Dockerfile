@@ -1,9 +1,17 @@
-FROM alpine:3.10.3
+FROM alpine:latest
+ADD assets/check /opt/resource/check
+ADD assets/in /opt/resource/in
+RUN \
+set -ex && \
+apk --update --no-cache add \
+bash \
+jq \
+git \
+openssh-client \
+ca-certificates && \
+chmod +x /opt/resource/* && \
+rm -rf /var/cache/apk/*
 
-RUN apk --update --no-cache add \
-  bash \
-  jq \
-  git
 
-ADD assets /opt/resource
-RUN chmod +x /opt/resource/*
+
+#RUN chmod +x /opt/resource/*
